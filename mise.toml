@@ -5,6 +5,7 @@ act = "0.2.84"
 python = "3.14.3"
 uv = "0.10.1"
 ruff = "0.15.0"
+"pipx:pyrefly" = "0.57.1"
 
 [tasks.setup]
 run = "lefthook install"
@@ -14,6 +15,9 @@ run = "ruff format ."
 
 [tasks.lint]
 run = "ruff check ."
+
+[tasks.typecheck]
+run = 'pyrefly check'
 
 [tasks.act]
 run = 'act pull_request --secret-file .env -e .github/act/pull_request.json -j checks'
