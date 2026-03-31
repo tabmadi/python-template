@@ -1,3 +1,11 @@
+[tools]
+lefthook = "2.1.0"
+cocogitto = "6.5.0"
+act = "0.2.84"
+python = "3.14.3"
+uv = "0.10.1"
+ruff = "0.15.0"
+
 [tasks.setup]
 run = "lefthook install"
 
