@@ -4,7 +4,9 @@ version = "0.0.0"
 description = "A basic GitHub repository template for Python projects"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "pytest>=9.0.3",
+]
 
 [tool.ruff]
 line-length = 120
