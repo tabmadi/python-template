@@ -22,5 +22,11 @@ run = 'pyrefly check'
 [tasks.test]
 run = "uv run pytest"
 
+[tasks.check]
+depends = ["format", "lint", "typecheck", "test"]
+
+[tasks.pre-commit]
+depends = ["format", "lint", "typecheck"]
+
 [tasks.act]
 run = 'act pull_request --secret-file .env -e .github/act/pull_request.json -j checks'
