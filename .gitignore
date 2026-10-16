@@ -12,6 +12,15 @@
 *.swo
 
 # Environment variable files
-.env
 .env*
 !.env.example
+
+# Planned work stays local
+*.local.md
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/

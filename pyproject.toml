@@ -1,10 +1,13 @@
 [project]
 name = "python-template"
 version = "0.0.0"
-description = "A basic GitHub repository template for Python projects"
+description = "A template for a Python application"
 readme = "README.md"
-requires-python = ">=3.14"
-dependencies = [
+requires-python = ">=3.15"
+dependencies = []
+
+[dependency-groups]
+dev = [
     "pytest>=9.0.3",
 ]
 
@@ -17,11 +20,16 @@ ignore = [
     "D203", # `one-blank-line-before-class` conflicts with `no-blank-line-before-class` (D211)
     "D213", # `multi-line-summary-second-line` conflicts with `multi-line-summary-first-line` (D212)
     "COM812", # `missing-trailing-comma` conflicts with formatter
+    "CPY001", # the LICENSE file holds the copyright, not each source file
 ]
 
-[tool.isort]
-profile = "black"
-force_grid_wrap = 1
-multi_line_output = 3
-order_by_type = true
-combine_as_imports = true
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = [
+    "S101", # pytest uses a bare `assert`
+    "INP001", # pytest collects tests without a package
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+

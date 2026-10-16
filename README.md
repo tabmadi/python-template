@@ -1,137 +1,86 @@
-# 🐍 Python Project Template
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+# Python Template
 
-A modern Python repository template that provides a solid foundation for your next Python project. This template follows the `src` layout for better package management and includes essential tools for development, testing, and CI/CD.
+A template for a Python application. It uses the `src` layout, `uv` for the environment and the lock file, `ruff` with every rule enabled, and `pyrefly` for type checks. It starts from [github-project-template](https://github.com/tabmadi/github-project-template), so it has the same hooks, CI gate, and documentation convention.
 
-## ✨ Features
+## Stack
 
-- 🐍 **Python Focused**: Optimized for modern Python development (3.12+)
-- 📁 **Src Layout**: Follows [Python's recommended `src` layout](https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/)
-- 📦 **Modern Dependency Management**: Powered by `uv` for lightning-fast package management
-- 🛠️ **Linting & Formatting**: Pre-configured with `ruff`
-- 🔧 **Modern Tooling**: Pre-configured development workflow tools including Lefthook, Mise, Cocogitto, and Act
-- 🏥 **Community Health Files**: Includes standard files for project governance
-- 🤝 **GitHub Integration**: Pre-configured issue and pull request templates
+| Tool | Owns |
+| --- | --- |
+| [Python](https://www.python.org) | The interpreter |
+| [uv](https://docs.astral.sh/uv/) | The environment, the lock file, and running code |
+| [ruff](https://docs.astral.sh/ruff/) | Lint and format |
+| [pyrefly](https://pyrefly.org) | Type checks |
+| [pytest](https://docs.pytest.org) | Tests |
+| [mise](https://mise.jdx.dev) | Tool versions and tasks |
+| [lefthook](https://github.com/evilmartians/lefthook) | Git hooks |
+| [cocogitto](https://docs.cocogitto.io) | Conventional Commits checks |
+| [rumdl](https://github.com/rvben/rumdl) | Markdown lint |
+| [gitleaks](https://github.com/gitleaks/gitleaks) | Secret scan |
+| [Renovate](https://docs.renovatebot.com) | Updates to the pinned versions |
 
-## 🚀 Quick Start
+## Getting started
 
-### Prerequisites
+1. Install [mise](https://mise.jdx.dev/getting-started.html).
+2. Clone the repo and install the tools, dependencies, and hooks:
 
-- [Mise](https://mise.jdx.dev/) - Tool version manager
-- [Docker](https://www.docker.com/) - Required for running GitHub Actions locally with Act
-
-### Installation
-
-1. **Clone the repository**:
    ```bash
-   git clone https://github.com/TheRealZurvan/python-project-template.git
-   cd python-project-template
-   ```
-
-2. **Setup environment**:
-   ```bash
-   # Install mise (if not already installed)
-   curl https://mise.run | sh
-   
-   # Install configured tools (python, uv, ruff, lefthook, cocogitto, act)
+   git clone git@github.com:tabmadi/python-template.git
+   cd python-template
    mise install
-   
-   # Set up Python virtual environment and dependencies
-   uv venv
-   uv sync
-   
-   # Set up Git hooks
-   lefthook install
+   mise run setup
    ```
 
-## 🏃‍♂️ Usage
+3. Run the app:
 
-### Local CI Testing (Act)
+   ```bash
+   mise run run
+   ```
 
-If you have Docker installed, you can run GitHub Actions locally using `act`. This template includes a pre-configured mise task for testing pull request workflows:
+## Tasks
 
-```bash
-mise run act-pr
-```
+| Task | Does |
+| --- | --- |
+| `mise run setup` | Installs the locked dependencies and the git hooks |
+| `mise run run` | Runs the app |
+| `mise run format` | Applies every formatter and every safe lint fix |
+| `mise run lint` | Runs `lint:py`, `lint:md`, and `lint:secrets` |
+| `mise run test` | Runs the tests |
+| `mise run check` | Runs `lint` and `test`. Run it before you finish a change |
+| `mise run ci` | Runs exactly what CI runs. The `pre-push` hook runs it too |
 
-This command uses `.github/act/pull_request.json` to simulate a pull request event.
+## Layout
 
-## 🛠️ Development
-
-### 🔧 Development Tools
-
-- **Python**: The core programming language (version specified in `.tool-versions`).
-- **UV**: An extremely fast Python package and project manager, replacing `pip`, `pip-tools`, and `poetry`.
-- **Ruff**: An extremely fast Python linter and code formatter, written in Rust.
-- **Mise**: Ensures consistent tool versions (python, uv, ruff, cocogitto, lefthook, act) across different environments.
-- **Lefthook**: Git hooks manager that runs checks (like `ruff`) before commits and pushes.
-- **Cocogitto**: Enforces Conventional Commits and automates changelog generation.
-- **Act**: Runs GitHub Actions locally for faster feedback loops.
-
-### 🪝 Git Hooks & Conventional Commits
-
-This project uses **Lefthook** for Git hooks and follows **Conventional Commits**.
-- **Commit-msg**: Validates commit messages using `cog verify`.
-- **Pre-push**: Runs checks before pushing to the remote repository.
-
-## 📁 Project Structure
-
-This project follows the [src layout](https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/).
-
-```
+```text
 .
-├── .github/
-│   ├── ISSUE_TEMPLATE/    # Structured issue templates
-│   └── act/               # Local CI testing configuration
-├── scripts/               # Helper scripts
-├── src/                   # Source code
-│   └── main.py            # Main entry point
-├── tests/                 # Test suite (if applicable)
-├── .lefthook.yml          # Git hooks configuration
-├── .tool-versions         # Mise tool versions
-├── LICENSE                # Apache License 2.0
-├── pyproject.toml         # Python project configuration and dependencies
-├── README.md              # You are here! 📍
-├── SECURITY.md            # Security policy
-└── mise.toml              # Mise tasks configuration
+├── src/main.py       The entry point
+├── tests/            The pytest tests
+├── docs/adr/         The decisions: foundations, doc conventions, toolchain
+├── pyproject.toml    The dependencies and every tool config
+├── uv.lock           The locked dependency set
+├── .mise.toml        Tool pins and tasks
+└── .lefthook.yml     Git hooks
 ```
 
-## ✏️ Customization Guide
+## Using this template
 
-### README.md
-- Replace this content with information about your project.
-- Include sections such as Project description, Usage examples, and API documentation.
+1. Create a repository from this template on GitHub.
+2. Change `name` and `description` in `pyproject.toml`.
+3. Replace `src/main.py` and its test with your own code.
+4. Update the contacts in `SECURITY.md` and the copyright line in `LICENSE`.
+5. Install the [Renovate app](https://github.com/apps/renovate) on the new repository.
 
-### LICENSE
-- The template includes the Apache License 2.0.
-- Update the copyright notice or replace the file with your preferred license.
+## Decisions
 
-### Community Files
-- **CODE_OF_CONDUCT.md**: Update the contact information in the "Enforcement" section.
-- **SECURITY.md**: Update contact details and supported versions policy.
+The ADRs in [docs/adr](docs/adr/README.md) record every decision and the reason for it. [ADR-0001](docs/adr/0001-documentation-conventions.md) is the house style for all text.
 
-### Templates
-- **Issue Templates**: Modify fields, labels, and descriptions in `.github/ISSUE_TEMPLATE/`.
-- **Pull Request Template**: Adjust the checklist items in `.github/PULL_REQUEST_TEMPLATE.md`.
+## Contributing
 
-## 🤝 Contributing
+Follow the [Code of Conduct](CODE_OF_CONDUCT.md). Commit messages follow [Conventional Commits](https://www.conventionalcommits.org), and the `commit-msg` hook checks them. Run `mise run check` before you open a pull request.
 
-Contributions are welcome! Please follow these steps:
+## Security
 
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes using [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+To report a vulnerability, follow [SECURITY.md](SECURITY.md).
 
-## 🔒 Security
+## License
 
-Please see [SECURITY.md](SECURITY.md) for our security policy.
-
-## 📄 License
-
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
-
----
-
-**Happy coding! 🎉** If you find this template useful, please give it a ⭐️
+Apache License 2.0. See [LICENSE](LICENSE).
