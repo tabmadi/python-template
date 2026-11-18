@@ -1,4 +1,4 @@
-# The toolchain, the git hooks, and the checks, per ADR-0100. The tabnix module holds every shared
+# The toolchain, the git hooks, and the checks, per ADR-0100 and ADR-0110. The tabnix module holds every shared
 # part, and this file adds the Python parts.
 {
   description = "A Python application with uv, ruff with every rule, pyrefly, and pytest";

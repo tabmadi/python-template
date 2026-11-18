@@ -1,4 +1,4 @@
-# ruff with every rule, per ADR-0100. Each ignored rule names its reason.
+# ruff with every rule, per ADR-0110. Each ignored rule names its reason.
 line-length = 120
 
 [lint]
