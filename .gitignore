@@ -1,26 +1,61 @@
-# JetBrain
+# JetBrains
 .idea/
 .run/
 
-# Visual Studio Code
+# Visual Studio Code and Visual Studio
 .vscode/
-.history
+.history/
+.vs/
 
-# Vim
+# Vim and Neovim
 *~
 *.swp
 *.swo
 
+# Emacs
+\#*\#
+.#*
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Helix
+.helix/
+
+# AI coding agents. AGENTS.md is the one shared file, per AGENTS.md
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+.codex/
+.opencode/
+opencode.json
+opencode.jsonc
+.cursor/
+.cursorrules
+.windsurf/
+.windsurfrules
+.gemini/
+GEMINI.md
+.aider*
+.github/copilot-instructions.md
+
 # Environment variable files
 .env*
 !.env.example
+!.envrc
 
-# Planned work stays local
-*.local.md
-
-# Python
-__pycache__/
-*.py[cod]
+# Build files
 .venv/
+__pycache__/
 .pytest_cache/
 .ruff_cache/
+
+# Personal notes that stay out of git
+*.local.md
+
+# Nix, per ADR-0100
+.direnv/
+result
+result-*
+.pre-commit-config.yaml

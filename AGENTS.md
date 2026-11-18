@@ -6,7 +6,8 @@ This guide is for any coding agent that works in this repo. `AGENTS.md` is the o
 
 ## Read first
 
-- [ADR-0000](docs/adr/0000-foundations.md): the layout and the Python conventions.
+- If a `template/` folder exists, read `template/AGENTS.md` before anything else.
+- [ADR-0000](docs/adr/0000-foundations.md): the layout, the Python conventions, and the recipe contract.
 - [docs/adr/README.md](docs/adr/README.md): the ADR index. To check a convention, grep the `Rules` sections first.
 
 ## Write in Simple English
@@ -17,12 +18,13 @@ Every text follows the Simple English profile in [ADR-0001](docs/adr/0001-docume
 - In prose, use only period, comma, colon, and the possessive apostrophe. No em dash, semicolon, parentheses, or `?`.
 - No emoji, no contractions, and no `e.g.` or `etc.`
 - No chronology, intensifiers, hedges, or planned work. State what is true now.
+- `just lint-prose` checks these rules with tablint.
 
 ## Working in the repo
 
-- Run every command as `mise run <task>`. A bare `python`, `uv`, or `ruff` call resolves from `PATH` at an unpinned version.
-- Run Python code through `uv run`. Change dependencies with `uv add` and `uv remove`, never by editing `uv.lock`.
-- `ruff` runs every rule. `mise run format` applies its fixes. Fix the code, or add a `# noqa: <code>` with a reason on the one line.
-- Everything here is inherited by every generated project. Add a dependency only when the template itself needs it.
-- Before you finish a change, run `mise run check`.
+- Work inside the dev shell: run `nix develop`, or allow direnv. Then run every task as `just <recipe>`. A bare `python` or `ruff` outside the shell resolves from `PATH` at an unpinned version.
+- Run Python code through `uv run`, so it uses the locked environment.
+- ruff is the arbiter. `just format` applies its fixes. Fix the code, or add a `# noqa: <rule>` with a reason on the one line. A direct `ruff` call needs `--config .config/ruff.toml`.
+- Dependencies change through `uv add` and `uv remove`, never by an edit of `uv.lock`.
+- Before you finish a change, run `just check`. `just ci` runs the full sandboxed gate that CI runs.
 - Commit messages are a Conventional Commits title only, with no body. Never push unless asked to.

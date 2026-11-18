@@ -1,0 +1,17 @@
+# ruff with every rule, per ADR-0100. Each ignored rule names its reason.
+line-length = 120
+
+[lint]
+select = ["ALL"]
+ignore = [
+  "D203", # `one-blank-line-before-class` conflicts with D211, `no-blank-line-before-class`
+  "D213", # `multi-line-summary-second-line` conflicts with D212, `multi-line-summary-first-line`
+  "COM812", # `missing-trailing-comma` conflicts with the formatter
+  "CPY001", # the LICENSE file holds the copyright, not each source file
+]
+
+[lint.per-file-ignores]
+"tests/**" = [
+  "S101", # pytest uses a bare `assert`
+  "INP001", # pytest collects tests without a package
+]

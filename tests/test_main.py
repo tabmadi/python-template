@@ -1,12 +1,10 @@
 """Tests for the application entry point."""
 
 import logging
-from typing import TYPE_CHECKING
+
+import pytest
 
 from main import main
-
-if TYPE_CHECKING:
-    import pytest
 
 
 def test_main_logs_a_greeting(caplog: pytest.LogCaptureFixture) -> None:
