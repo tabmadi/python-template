@@ -47,17 +47,22 @@ Sources:
 
 ### The type checker
 
-| Option | 3 Fast | 4 Strict | 5 Maintained | Verdict |
-| --- | --- | --- | --- | --- |
-| mypy | Seconds on a mid-size project, faster with its parallel mode | Lower conformance than pyright | Yes | Rejected on driver 3 |
-| pyright or basedpyright | Several times slower than pyrefly | The highest conformance of the four | Yes | Rejected on driver 3. It stays the choice for a repo that needs the strictest checks |
-| ty | Fast | Lower conformance | Beta | Rejected on driver 5 |
-| **pyrefly** | **Fast. It is also the language server of the editor** | **Lower conformance than pyright** | **Stable since 1.0.0 in May 2026** | **Chosen. Speed and one tool for the check and the editor win over the last points of conformance** |
+| Option | 3 Fast | 4 Strict | 2 Few tools | 5 Maintained | Verdict |
+| --- | --- | --- | --- | --- | --- |
+| mypy | Seconds on a mid-size project, faster with its parallel mode | 58 to 77 percent of the conformance tests | A Python package | Yes | Rejected on drivers 3 and 4 |
+| basedpyright | Several times slower than pyrefly | 94 to 98 percent, with an `all` mode of extra rules | Runs on Node.js, 227 MiB with its runtime | Yes | Rejected. It equals pyrefly on conformance and carries a second runtime. It stays the choice for a repo that wants its extra rules |
+| ty | Fast | 53 to 82 percent | One binary | Beta | Rejected on drivers 4 and 5 |
+| **pyrefly** | **The fastest** | **88 to 98 percent, with an `all` preset** | **One binary, 83 MiB** | **Stable since 1.0.0 in May 2026** | **Chosen** |
+
+Each percentage is the range of published runs of the conformance suite of the typing specification. A run measures one version of each checker, so the newer runs rate pyrefly higher.
 
 Sources:
 
-- Speed and conformance of each checker: [How do Python type checkers compare](https://pydevtools.com/handbook/explanation/how-do-mypy-pyright-and-ty-compare/), [Pyrefly speed and memory comparison](https://pyrefly.org/blog/speed-and-memory-comparison/).
-- [pyrefly](https://pyrefly.org/), [basedpyright](https://docs.basedpyright.com/).
+- The March 2026 run: pyright 97.8, pyrefly 87.8, mypy 58.3, and ty 53.2 percent: [Typing spec conformance comparison](https://docs.bswen.com/blog/2026-03-17-python-type-checker-conformance-comparison/).
+- A July 2026 run by another type checker, Basilisk: pyrefly 97.9, pyright 96.8, ty 82.3, and mypy 77.3 percent: [Basilisk comparison](https://www.basilisk-python.dev/docs/comparison/).
+- The comparison page of pyrefly: [pyrefly compared with mypy and pyright](https://pyrefly.org/en/docs/compare/).
+- Speed: [Pyrefly speed and memory comparison](https://pyrefly.org/blog/speed-and-memory-comparison/).
+- [basedpyright](https://docs.basedpyright.com/), and Zed has pyrefly built in, beside its default basedpyright: [Zed Python docs](https://zed.dev/docs/languages/python).
 
 ### The environment in Nix
 
@@ -79,6 +84,8 @@ A wheel with native code links against the C++ runtime and zlib. The dev shell p
 
 The Python line is 3.15: `flake.nix` takes `python315`, and `requires-python` in `pyproject.toml` names the same line.
 
+pyrefly runs with its `all` preset, set in `[tool.pyrefly]` of `pyproject.toml`. Both the check and the language server of Zed read it there. Without a config, pyrefly falls back to its lenient `basic` preset, and Zed shows no type errors.
+
 ruff is both the linter and the formatter. `.config/ruff.toml` enables every rule and ignores each exception by name with a reason. Every recipe, check, hook, and Zed setting passes `--config .config/ruff.toml`. pytest reads its settings from `pyproject.toml`, beside the project it tests.
 
 | File type | Formatter |
@@ -90,7 +97,7 @@ The checks need the locked environment, and the Nix sandbox has no network. So u
 ## Consequences
 
 - ruff with every rule is strict. A new rule in a lock update can fail the gate on unchanged code, and the fix is a code change or a named exception.
-- pyrefly misses some cases of the typing specification that pyright finds.
+- pyrefly has no counterpart for some extra rules of basedpyright, such as `reportAny`.
 - A wheel with native code that needs a library beyond the C++ runtime and zlib needs that library in `tabnix.env` too.
 
 ## Rules
@@ -99,3 +106,4 @@ The checks need the locked environment, and the Nix sandbox has no network. So u
 - `requires-python` and `flake.nix` name the same Python line.
 - Python code runs through `uv run`, or in the checks through the environment of uv2nix.
 - `uv.lock` is the only lock file.
+- pyrefly runs with the `all` preset of `pyproject.toml`. `(CI: lint-py)`
