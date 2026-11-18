@@ -59,8 +59,11 @@ This repo is a Python application.
 | --- | --- |
 | `src/` | The application code. Nothing is imported from the repo root |
 | `tests/` | The pytest tests, in the same layout as `src/` |
+| `src/config.py` | The configuration: defaults in code, overridden by environment variables |
 | `pyproject.toml` | The project, its dependencies, and the pytest settings |
 | `uv.lock` | The locked dependency set |
+
+**Configuration is read in one place.** Only `src/config.py` reads the environment.
 
 **`uv` owns the environment.** Python code runs through `uv run`, which uses the locked environment. A bare `python` call outside it has a different dependency set.
 
@@ -98,6 +101,7 @@ A source can change after the ADR cites it. A reader who finds that a cited fact
 ## Rules
 
 - Application code lives under `src/`. Tests live under `tests/`.
+- Only `src/config.py` reads environment variables.
 - Dependencies change through `uv add` and `uv remove`. `uv.lock` is never edited by hand.
 - A test-only dependency is in the `dev` dependency group.
 - Every function signature has type hints. `(CI: lint-py)`

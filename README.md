@@ -42,6 +42,12 @@ A template for a Python application. It uses the `src` layout, `uv` for the envi
    just run
    ```
 
+4. Call it from another terminal:
+
+   ```bash
+   curl http://localhost:8080/health
+   ```
+
 A wheel with native code, such as `numpy`, works in the dev shell. The shell gives it the C++ runtime and zlib.
 
 ## Editor
@@ -73,7 +79,9 @@ Open the folder in Zed, and run `direnv allow` once. Zed suggests its Nix extens
 ├── .github/          Issue forms, the CI workflow, Renovate, SECURITY.md, and CODE_OF_CONDUCT.md
 ├── .zed/             Zed project settings and tasks
 ├── src/
-│   └── main.py       The entry point
+│   ├── main.py       The entry point. It logs in JSON and stops the server on a signal
+│   ├── config.py     The configuration, checked at startup
+│   └── server.py     The HTTP routes
 ├── tests/            The pytest tests
 ├── docs/adr/         The decisions of the project: foundations, doc conventions, toolchain
 ├── template/         What only the template needs: its contract, checks, and outputs
@@ -87,6 +95,15 @@ Open the folder in Zed, and run `direnv allow` once. Zed suggests its Nix extens
 ├── README.md
 └── LICENSE
 ```
+
+## Configuration
+
+| Variable | Description | Default |
+| --- | --- | --- |
+| `PORT` | The port the server binds, from 1 to 65535 | `8080` |
+| `LOG_LEVEL` | One of `debug`, `info`, `warn`, or `error`, in any case | `info` |
+
+An unset or empty variable takes its default. A bad value stops the app at startup, with the error on standard error.
 
 ## Starting a project
 
@@ -102,7 +119,7 @@ Then follow the steps that it prints:
 2. Change `name` in `pyproject.toml` to your own.
 3. Run `nix develop`. It downloads the tools and installs the git hooks.
 4. Run `just setup`. It installs the locked environment.
-5. Replace `src/main.py` with your own code.
+5. Replace the sample service in `src/` with your own code.
 6. Rewrite this README for the project, with the sections that ADR-0001 sets for its kind of repo.
 7. Update the contacts in `.github/SECURITY.md` and the copyright line in `LICENSE`.
 8. Install the [Renovate app](https://github.com/apps/renovate) on the new repository.
