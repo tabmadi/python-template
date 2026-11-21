@@ -103,7 +103,7 @@ The checks need the locked environment, and the Nix sandbox has no network. So u
 ## Rules
 
 - A ruff rule is ignored by name with a reason in `.config/ruff.toml`. `(CI: lint-py)`
-- `requires-python` and `flake.nix` name the same Python line.
+- `requires-python` and `flake.nix` name the same Python line. `(CI: lint-prose)`
 - Python code runs through `uv run`, or in the checks through the environment of uv2nix.
 - `uv.lock` is the only lock file.
 - pyrefly runs with the `all` preset of `pyproject.toml`. `(CI: lint-py)`

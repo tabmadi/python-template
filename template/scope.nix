@@ -4,6 +4,10 @@
   imports = [ inputs.tabnix.flakeModules.template ];
 
   tabnix.template = {
+    extraVoice = [
+      "github\\.com/tabmadi"
+      "blueprints"
+    ];
     description = "A Python application with uv, ruff with every rule, pyrefly, and pytest";
     welcomeText = ''
       # A new project
