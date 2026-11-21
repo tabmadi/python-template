@@ -3,12 +3,12 @@ name = "python-template"
 version = "0.0.0"
 description = "A template for a Python application"
 readme = "README.md"
-requires-python = ">=3.15"
+requires-python = "==3.15.2"
 dependencies = []
 
 [dependency-groups]
 dev = [
-  "pytest>=9.2.0",
+  "pytest==9.2.0",
 ]
 
 [tool.pytest.ini_options]
