@@ -1,4 +1,4 @@
-# The toolchain, the git hooks, and the checks, per ADR-0100 and ADR-0110. The tabnix module holds every shared
+# The toolchain, the git hooks, and the checks, per ADR-0100 and ADR-0110. The tabkit module holds every shared
 # part, and this file adds the Python parts.
 {
   description = "A Python application with uv, ruff with every rule, pyrefly, and pytest";
@@ -10,8 +10,8 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
     # A new version is a new tag here.
-    tabnix = {
-      url = "github:tabmadi/tabnix/v0.15.0";
+    tabkit = {
+      url = "github:tabmadi/tabkit/v0.16.0";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
@@ -34,11 +34,11 @@
   };
 
   outputs =
-    inputs@{ flake-parts, tabnix, ... }:
+    inputs@{ flake-parts, tabkit, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       # The template scope adds its own checks and outputs. A copy has no template/ folder, so it adds nothing.
       imports = [
-        tabnix.flakeModules.default
+        tabkit.flakeModules.default
       ]
       ++ inputs.nixpkgs.lib.optional (builtins.pathExists ./template/scope.nix) ./template/scope.nix;
 
@@ -82,7 +82,7 @@
               '';
         in
         {
-          tabnix.packages = [
+          tabkit.packages = [
             python
             pkgs.uv
             pkgs.ruff
@@ -91,7 +91,7 @@
 
           # uv uses the Python of the dev shell and never downloads one. A wheel with native code
           # finds the C++ runtime and zlib, which a Nix Python does not give it.
-          tabnix.env = {
+          tabkit.env = {
             UV_PYTHON = "${python}/bin/python3";
             UV_PYTHON_DOWNLOADS = "never";
             LD_LIBRARY_PATH = lib.makeLibraryPath [
@@ -101,7 +101,7 @@
           };
 
           # A fix stops the commit, so the engineer reviews the change and stages it.
-          tabnix.hooks.ruff = {
+          tabkit.hooks.ruff = {
             name = "ruff";
             entry = "${pkgs.writeShellScript "ruff-fix" ''
               ${pkgs.ruff}/bin/ruff check ${ruff} --fix "$@"

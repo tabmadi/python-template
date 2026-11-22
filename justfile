@@ -28,7 +28,7 @@ lint-py: in-shell
 
 # Prose, comments, and ADRs, per ADR-0001
 lint-prose: in-shell
-    tabrules check
+    tabkit check
 
 # Markdown structure and formatting, per ADR-0001
 lint-md: in-shell

@@ -78,7 +78,7 @@ Sources:
 
 ## Decision
 
-uv owns the virtual environment in `.venv/`, and the dev shell holds its Python. uv uses that Python and never downloads one, through `UV_PYTHON` and `UV_PYTHON_DOWNLOADS=never` in `tabnix.env`.
+uv owns the virtual environment in `.venv/`, and the dev shell holds its Python. uv uses that Python and never downloads one, through `UV_PYTHON` and `UV_PYTHON_DOWNLOADS=never` in `tabkit.env`.
 
 A wheel with native code links against the C++ runtime and zlib. The dev shell puts both on `LD_LIBRARY_PATH`, so a wheel such as `numpy` loads.
 
@@ -98,7 +98,7 @@ The checks need the locked environment, and the Nix sandbox has no network. So u
 
 - ruff with every rule is strict. A new rule in a lock update can fail the gate on unchanged code, and the fix is a code change or a named exception.
 - pyrefly has no counterpart for some extra rules of basedpyright, such as `reportAny`.
-- A wheel with native code that needs a library beyond the C++ runtime and zlib needs that library in `tabnix.env` too.
+- A wheel with native code that needs a library beyond the C++ runtime and zlib needs that library in `tabkit.env` too.
 
 ## Rules
 

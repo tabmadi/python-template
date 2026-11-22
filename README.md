@@ -13,14 +13,13 @@ A template for a Python application. It uses the `src` layout, `uv` for the envi
 | [pytest](https://pytest.org) | Tests |
 | [Nix](https://nixos.org) with flakes | Tool versions, the dev shell, and the sandboxed checks |
 | [uv2nix](https://github.com/pyproject-nix/uv2nix) | The locked environment for the checks |
-| [tabnix](https://github.com/tabmadi/tabnix) | The shared dev shell, git hooks, and checks |
+| [tabkit](https://github.com/tabmadi/tabkit) | The shared dev shell, git hooks, and checks, and the rules for prose, comments, and ADRs |
 | [just](https://just.systems) | Tasks |
 | [Zed](https://zed.dev) | The supported editor, with project settings in `.zed/` |
 | [git-hooks.nix](https://github.com/cachix/git-hooks.nix) | Git hooks |
 | [cocogitto](https://docs.cocogitto.io) | Conventional Commits checks |
 | [rumdl](https://github.com/rvben/rumdl) | Markdown lint |
 | [dprint](https://dprint.dev) | JSON, TOML, and YAML format |
-| [tabrules](https://github.com/tabmadi/tabrules) | Prose, comments, and ADRs |
 | [gitleaks](https://github.com/gitleaks/gitleaks) | Secret scan |
 | [Renovate](https://docs.renovatebot.com) | Updates to the pinned versions |
 
