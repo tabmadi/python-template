@@ -11,9 +11,11 @@
     };
     # A new version is a new tag here.
     tabkit = {
-      url = "github:tabmadi/tabkit/v0.19.0";
+      url = "github:tabmadi/tabkit/v0.21.0";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
+      # Only the own checks of tabkit read this input, so it adds no second nixpkgs here.
+      inputs.nixos-stable.follows = "nixpkgs";
     };
     # uv2nix builds the environment of uv.lock, so a check installs it without network.
     pyproject-nix = {
